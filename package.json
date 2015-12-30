@@ -1,1 +1,5 @@
-{}
+{
+  "devDependencies": {
+    "babel-register": "^6.3.13"
+  }
+}
