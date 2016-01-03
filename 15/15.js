@@ -1,4 +1,6 @@
-module.exports = function() {
+module.exports = function(options) {
+	var options = options || {};
+	var isPart2 = options.isPart2 || false;
 	
 	var ingredients;
 
@@ -23,6 +25,8 @@ module.exports = function() {
 	}
 
 	function bake(ingredients, distributions) {
+		if (isPart2) return step2(ingredients,distributions);
+
 		var score = {
 			capacity: 0,
 			durability: 0,
@@ -49,8 +53,42 @@ module.exports = function() {
 		return tasty;
 	}
 
+	function step2(ingredients, distributions) {
+		var score = {
+			capacity: 0,
+			durability: 0,
+			flavor: 0,
+			texture: 0
+		};
+
+		var calories = 0;
+		distributions.forEach((distribution) => {
+			var ingredient = ingredients[distribution.name];
+			calories += ingredient['calories'] * distribution.teaspoons;
+		})
+
+		Object.keys(score).forEach((key) => {
+			var val = 0;
+			distributions.forEach((distribution) => {
+				var ingredient = ingredients[distribution.name];
+				val += ingredient[key] * distribution.teaspoons;
+			})
+			score[key] += (val > 0) ? val : 0;
+		})
+
+		var values = [];
+		Object.keys(score).forEach((key) => {
+		    values.push(score[key]);
+		})
+		
+		var tasty = values.reduce((a, b) => { return a*b;});
+
+		return (calories === 500) ? tasty : 0;
+	}
+
 	function find(input) {
 		ingredients = parse(input);
+
 		var bestCake = 0;
 
 		for (var i = 0; i <= 100; i++) {
@@ -91,6 +129,7 @@ module.exports = function() {
 	return {
 		parse: parse,
 		bake: bake,
+		step2: step2,
 		find: find
 	};
 }

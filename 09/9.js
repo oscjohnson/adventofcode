@@ -1,6 +1,8 @@
 //https://en.wikipedia.org/wiki/Travelling_salesman_problem
 // O(n^2*2^n, n =28, = 210453397504 
 // https://www.youtube.com/watch?v=AJYP34ror6M
+var permutations = require('../utils/permutations.js')
+
 module.exports = function () {
 
 	function calculateFastestRoute(input) {
@@ -65,27 +67,6 @@ module.exports = function () {
 			}
 		}
 		return cities;
-	}
-	
-	function permutations(inputArr) {
-		var results = [];
-
-		function permute(arr, memo) {
-			var cur, memo = memo || [];
-
-			for (var i = 0; i < arr.length; i++) {
-				cur = arr.splice(i, 1);
-				if (arr.length === 0) {
-					results.push(memo.concat(cur));
-				}
-				permute(arr.slice(), memo.concat(cur));
-				arr.splice(i, 0, cur[0]);
-			}
-
-			return results;
-		}
-
-		 return permute(inputArr);
 	}
 
 	function parse(input) {

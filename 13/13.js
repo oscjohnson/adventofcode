@@ -1,3 +1,5 @@
+var permutations = require('../utils/permutations.js')
+
 module.exports = function(options) {
 	var options = options || {};
 	var isPart2 = options.isPart2 || false;
@@ -56,27 +58,6 @@ module.exports = function(options) {
 		};
 
 		return happiness;
-	}
-
-	function permutations(inputArr) {
-		var results = [];
-
-		function permute(arr, memo) {
-			var cur, memo = memo || [];
-
-			for (var i = 0; i < arr.length; i++) {
-				cur = arr.splice(i, 1);
-				if (arr.length === 0) {
-					results.push(memo.concat(cur));
-				}
-				permute(arr.slice(), memo.concat(cur));
-				arr.splice(i, 0, cur[0]);
-			}
-
-			return results;
-		}
-
-		 return permute(inputArr);
 	}
 
 	return {
